@@ -2,11 +2,11 @@
   "name": "try",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "main": "src/server.ts",
   "type": "module",
   "scripts": {
-    "start": "node ./dist/index.js",
-    "dev": "tsx watch --env-file=.env ./src/index.ts --exclude ./node_modules",
+    "start": "node --env-file=.env ./dist/server.js",
+    "dev": "tsx watch --env-file=.env ./src/server.ts --exclude ./node_modules",
     "lint": "npx eslint",
     "lint:fix": "npx eslint --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -28,8 +28,13 @@
     "typescript-eslint": "^8.39.1"
   },
   "dependencies": {
+    "@fastify/cors": "^11.1.0",
+    "@fastify/swagger": "^9.5.1",
+    "@fastify/swagger-ui": "^5.2.3",
     "@types/pg": "^8.15.5",
     "fastify": "^5.5.0",
-    "pg": "^8.16.3"
+    "fastify-type-provider-zod": "^5.0.3",
+    "pg": "^8.16.3",
+    "zod": "^4.0.17"
   }
 }
