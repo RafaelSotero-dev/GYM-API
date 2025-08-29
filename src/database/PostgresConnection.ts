@@ -1,4 +1,4 @@
-import { databaseConfig } from '../utils/databaseConfig.js';
+import { databaseConfig } from '../infra/databaseConfig.js';
 import type { IDatabaseConnect } from './db.js';
 import pg from 'pg';
 

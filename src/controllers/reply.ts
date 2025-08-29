@@ -1,7 +1,8 @@
 import type { IAluno } from '../entities/aluno.js';
 import type { IEndereco } from '../entities/endereco.js';
+import { alunoOutput } from '../services/Validations/outputSchema.js';
 
-interface IAlunoOutPut {
+export interface IAlunoOutPut {
   nome: string;
   idade: string;
   email: string;
@@ -11,16 +12,16 @@ interface IAlunoOutPut {
   endereco: IEndereco;
 }
 
-interface IEnderecoOutPut {
+export interface IEnderecoOutPut {
   id_endereco: string;
   rua: string;
   numero: number;
   bairro: string;
   CEP: string;
-  Alunos: Array<IAluno>;
+  Alunos: Array<Omit<IAluno, 'CPF'>>;
 }
 
 export interface IReply {
-  data?: IAlunoOutPut | IEnderecoOutPut | { msg: string | Array<string> };
+  data?: IEnderecoOutPut[] | alunoOutput | [] | { msg: string | Array<string> };
   status: number;
 }
