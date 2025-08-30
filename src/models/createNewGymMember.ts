@@ -1,14 +1,18 @@
 import type { QueryResult } from 'pg';
 import type { IDatabaseConnect } from '../database/db.js';
 import type { IQuery } from './query.js';
-import type { IRequest } from '../controllers/request.js';
+import type { IRequestBody } from '../controllers/request.js';
 import { Aluno } from '../entities/aluno.js';
 
 export class CreateNewGymMember implements IQuery {
   constructor(private model: IDatabaseConnect) {}
-  async query(queryParams: IRequest) {
+  async query(queryParams: IRequestBody) {
     const fistQuery = `INSERT INTO enderecos(rua, numero, bairro, CEP) VALUES ($1, $2, $3, $4) RETURNING id_endereco;`;
     const secondQuery = `INSERT INTO alunos(nome, idade, email, foto, CPF, status, role, modalidade, id_endereco) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`;
+    if (!queryParams.body) {
+      return;
+    }
+
     const { endereco, ...aluno } = queryParams.body;
 
     try {

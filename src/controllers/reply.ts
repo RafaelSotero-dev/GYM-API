@@ -22,6 +22,11 @@ export interface IEnderecoOutPut {
 }
 
 export interface IReply {
-  data?: IEnderecoOutPut[] | alunoOutput | [] | { msg: string | Array<string> };
+  data?:
+    | IEnderecoOutPut[]
+    | alunoOutput
+    | Array<alunoOutput>
+    | []
+    | { msg: string | Array<string> };
   status: number;
 }

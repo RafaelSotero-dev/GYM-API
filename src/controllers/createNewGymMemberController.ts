@@ -1,12 +1,12 @@
 import type { IService } from '../services/service.js';
 import type { IController } from './controller.js';
 import { IReply } from './reply.js';
-import { IRequest } from './request.js';
+import { IRequestBody } from './request.js';
 
 export class CreateNewGymMemberController implements IController {
   constructor(private service: IService) {}
 
-  async handler(params: IRequest): Promise<IReply> {
+  async handler(params: IRequestBody): Promise<IReply> {
     const res = await this.service.validation(params);
     if (res) {
       return {

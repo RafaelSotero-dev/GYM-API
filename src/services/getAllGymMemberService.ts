@@ -1,16 +1,7 @@
 import { IAlunoOutPut } from '../controllers/reply.js';
 import { IQuery } from '../models/query.js';
+import { subscriptionExpirationDate } from '../utils/dateFormatter.js';
 import { IService } from './service.js';
-
-const subscriptionExpirationDate = (date: Date) => {
-  const nextMonth = date.getMonth() + 1;
-  date.setMonth(nextMonth);
-  return date.toLocaleDateString('pt-BR', {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-  });
-};
 
 export class GetAllGymMembersService implements IService {
   constructor(private model: IQuery) {}

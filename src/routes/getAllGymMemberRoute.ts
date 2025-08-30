@@ -7,7 +7,7 @@ import { GetAllGymMembersService } from '../services/getAllGymMemberService.js';
 import { ErrorHandler } from '../utils/ErrorHandler.js';
 import { alunoOutPutSchema } from '../services/Validations/outputSchema.js';
 
-export const getNewGymMemberRoute = (app: FastifyTypedInstance) => {
+export const getAllGymMemberRoute = (app: FastifyTypedInstance) => {
   app.get(
     '/alunos',
     {
@@ -17,7 +17,7 @@ export const getNewGymMemberRoute = (app: FastifyTypedInstance) => {
         response: {
           200: z
             .object({
-              data: alunoOutPutSchema,
+              data: z.array(alunoOutPutSchema),
             })
             .or(z.object({ data: z.array(z.never()) })),
           404: z.object({

@@ -1,5 +1,5 @@
-import type { IRequest } from './request.js';
+import { IRequestBody, IRequestParams } from './request.js';
 
 export interface IController {
-  handler<T>(params: IRequest): Promise<T | unknown>;
+  handler<T>(params: IRequestBody | IRequestParams): Promise<T | unknown>;
 }

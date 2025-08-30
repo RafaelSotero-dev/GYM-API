@@ -53,7 +53,7 @@ app.register(fastifySwaggerUi, {
 
 app.setErrorHandler((err, _, reply) => {
   const status = err.statusCode as number;
-
+  console.log(err);
   if (err.code === 'FST_ERR_CTP_INVALID_JSON_BODY') {
     return reply.status(400).send({ data: { msg: 'PARÁMETROS FALTANDO!' } });
   }

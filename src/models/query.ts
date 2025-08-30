@@ -1,5 +1,5 @@
-import type { IRequest } from '../controllers/request.js';
+import type { IRequestBody, IRequestParams } from '../controllers/request.js';
 
 export interface IQuery {
-  query<T>(queryParams?: IRequest): Promise<T | unknown>;
+  query<T>(queryParams?: IRequestBody | IRequestParams): Promise<T | unknown>;
 }

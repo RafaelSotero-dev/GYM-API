@@ -1,8 +1,8 @@
 import { alunoInput } from '../services/Validations/inputSchema.js';
 
-export interface IRequest {
+export interface IRequestParams {
+  cpf: string;
+}
+export interface IRequestBody {
   body: alunoInput;
-  params?: string;
-  query?: string;
-  headers?: string;
 }

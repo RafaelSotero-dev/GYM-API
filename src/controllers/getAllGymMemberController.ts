@@ -12,6 +12,6 @@ export class GetAllGymMembersController implements IController {
       return { data: [], status: 200 };
     }
 
-    return { data: res as alunoOutput, status: 200 };
+    return { data: res as alunoOutput[], status: 200 };
   }
 }
