@@ -27,7 +27,9 @@ export const getGymMemberByCPFRoute = (app: FastifyTypedInstance) => {
           200: z.object({
             data: alunoOutPutSchema.or(z.object()),
           }),
-          400: z.object({ data: z.object({ msg: z.string() }) }),
+          400: z.object({
+            data: z.object({ msg: z.string().or(z.array(z.string())) }),
+          }),
         },
       },
     },
@@ -41,7 +43,7 @@ export const getGymMemberByCPFRoute = (app: FastifyTypedInstance) => {
         const getGymMemberByCPFController = new GetGymMemberByCPFController(
           getGymMemberByCPFService,
         );
-
+        console.log(req.params);
         const res = await getGymMemberByCPFController.handler(req.params);
         const status = res.status | 200;
         reply.status(status as 200).send({ data: res.data as alunoOutput });

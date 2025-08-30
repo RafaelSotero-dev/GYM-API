@@ -12,13 +12,13 @@ import {
   serializerCompiler,
   ZodTypeProvider,
   jsonSchemaTransform,
-  hasZodFastifySchemaValidationErrors,
   ZodFastifySchemaValidationError,
 } from 'fastify-type-provider-zod';
 import { fastifySwagger } from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import { routes } from './routes/index.js';
 import { z } from 'zod';
+import { PostgresConnection } from './database/PostgresConnection.js';
 
 export type FastifyTypedInstance = FastifyInstance<
   RawServerDefault,
@@ -53,11 +53,13 @@ app.register(fastifySwaggerUi, {
 
 app.setErrorHandler((err, _, reply) => {
   const status = err.statusCode as number;
-  console.log(err);
+
   if (err.code === 'FST_ERR_CTP_INVALID_JSON_BODY') {
-    return reply.status(400).send({ data: { msg: 'PARÁMETROS FALTANDO!' } });
+    return reply
+      .status(400)
+      .send({ data: { msg: 'FORMATO DA REQUISIÇÃO INVALIDA!' } });
   }
-  if (hasZodFastifySchemaValidationErrors(err)) {
+  if (err.code === 'FST_ERR_VALIDATION') {
     const validation = err.validation as ZodFastifySchemaValidationError[];
     let code: number = 500;
     const errArr = validation.map((error, ind) => {
@@ -77,6 +79,12 @@ app.setErrorHandler((err, _, reply) => {
 app.register(routes);
 
 app.listen({ port: 3000 }, (err, address) => {
+  const database = new PostgresConnection();
+  const res = database.connect('SELECT 1;', []);
+  res.catch(() => {
+    process.exit(1);
+  });
+
   if (err) {
     console.error(err);
     process.exit(1);
