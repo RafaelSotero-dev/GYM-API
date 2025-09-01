@@ -45,7 +45,9 @@ export const createNewGymMemberRoute = (app: FastifyTypedInstance) => {
       } catch (err) {
         const e = err as ErrorHandler;
         const status = e.status as 201 | 400 | 409;
-        reply.status(status).send({ data: { msg: e.message } });
+        reply
+          .status(status)
+          .send({ data: { msg: `Code: ${status} ~ Message: ${e.message} ` } });
       }
     },
   );
