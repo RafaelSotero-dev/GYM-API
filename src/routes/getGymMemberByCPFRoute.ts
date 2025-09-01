@@ -43,7 +43,6 @@ export const getGymMemberByCPFRoute = (app: FastifyTypedInstance) => {
         const getGymMemberByCPFController = new GetGymMemberByCPFController(
           getGymMemberByCPFService,
         );
-        console.log(req.params);
         const res = await getGymMemberByCPFController.handler(req.params);
         const status = res.status | 200;
         reply.status(status as 200).send({ data: res.data as alunoOutput });
