@@ -23,7 +23,7 @@ export const alunoSchemaInput = z.object({
   status: z
     .literal([0, 1], { error: 'STATUS INVALIDO!' })
     .nonoptional({ error: 'STATUS NÃO É OPCIONAL!' }),
-  role: z.literal(['aluno', 'admin'], { error: 'ROLE INVALIDA!' }),
+  role: z.literal(['aluno', 'admin'], { error: 'ROLE INVALIDA!' }).optional(),
   modalidade: z
     .literal([1, 2, 3], { error: 'MODALIDADE INVALIDA!' })
     .nonoptional({ error: 'MODALIDADE NÃO É OPCIONAL!' }),
