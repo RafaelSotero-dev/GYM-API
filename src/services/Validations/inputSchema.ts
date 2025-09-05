@@ -20,9 +20,7 @@ export const alunoSchemaInput = z.object({
     .string({ error: 'CPF INVALIDO!' })
     // eslint-disable-next-line no-useless-escape
     .regex(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, { error: 'CPF INVALIDO!' }),
-  status: z
-    .literal([0, 1], { error: 'STATUS INVALIDO!' })
-    .nonoptional({ error: 'STATUS NÃO É OPCIONAL!' }),
+  status: z.literal([0, 1], { error: 'STATUS INVALIDO!' }).optional(),
   role: z.literal(['aluno', 'admin'], { error: 'ROLE INVALIDA!' }).optional(),
   modalidade: z
     .literal([1, 2, 3], { error: 'MODALIDADE INVALIDA!' })

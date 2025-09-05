@@ -8,7 +8,7 @@ export class CreateNewGymMember implements IQuery {
   constructor(private model: IDatabaseConnect) {}
   async query(queryParams: IRequestBody) {
     const fistQuery = `INSERT INTO enderecos(rua, numero, bairro, CEP) VALUES ($1, $2, $3, $4) RETURNING id_endereco;`;
-    const secondQuery = `INSERT INTO alunos(nome, idade, email, foto, CPF, status, role, modalidade, id_endereco) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`;
+    const secondQuery = `INSERT INTO alunos(nome, idade, email, foto, CPF, role, modalidade, id_endereco) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
     if (!queryParams.body) {
       return;
     }
@@ -43,11 +43,10 @@ export class CreateNewGymMember implements IQuery {
           aluno.email,
           aluno.foto,
           aluno.CPF,
-          aluno.status,
-          aluno.role,
           aluno.modalidade,
           response.rows[0].id_endereco,
         );
+
         await this.model.connect(secondQuery, Object.values(alunoFormated));
         return;
       }
@@ -63,8 +62,6 @@ export class CreateNewGymMember implements IQuery {
         aluno.email,
         aluno.foto,
         aluno.CPF,
-        aluno.status,
-        aluno.role,
         aluno.modalidade,
         res.rows[0].id_endereco,
       );

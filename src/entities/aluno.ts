@@ -11,8 +11,8 @@ export interface IAluno {
   email: string;
   foto: string;
   CPF: string;
-  status: number;
-  role: 'aluno' | 'admin';
+  status?: number;
+  role?: 'aluno' | 'admin';
   modalidade: Modalidade;
   idEndereco?: string;
   createdAt?: Date;
@@ -25,7 +25,6 @@ export class Aluno implements IAluno {
   public readonly email: string;
   public readonly foto: string;
   public readonly CPF: string;
-  public readonly status: number;
   public readonly role: 'aluno' | 'admin';
   public readonly modalidade: Modalidade;
   private readonly id_Endereco: string;
@@ -36,18 +35,16 @@ export class Aluno implements IAluno {
     email: string,
     foto: string,
     CPF: string,
-    status: number,
-    role: 'aluno' | 'admin',
     modalidade: Modalidade,
     idEndereco: string,
+    role?: 'aluno' | 'admin',
   ) {
     this.nome = nome;
     this.idade = idade;
     this.email = email;
     this.foto = foto;
     this.CPF = CPF;
-    this.status = status;
-    this.role = role;
+    this.role = role ?? 'aluno';
     this.modalidade = modalidade;
     this.id_Endereco = idEndereco;
   }
