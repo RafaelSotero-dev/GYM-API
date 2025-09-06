@@ -16,6 +16,15 @@ export class UpdateGymMember implements IQuery {
       const { params, body } = queryParams;
       const { cpf } = params;
 
+      const result = await this.database.connect<QueryResult>(
+        'SELECT id_aluno FROM alunos WHERE cpf = $1',
+        [cpf],
+      );
+
+      if (!result.rows[0]) {
+        throw new ErrorHandler('ALUNO NÃO ENCONTRADO!', 404);
+      }
+
       if (body.email && typeof body.email === 'string') {
         const result = await this.database.connect<QueryResult>(
           'SELECT id_aluno FROM alunos WHERE email = $1',
