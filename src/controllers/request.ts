@@ -6,3 +6,8 @@ export interface IRequestParams {
 export interface IRequestBody {
   body: alunoInput;
 }
+
+export interface IRequest {
+  params: { cpf: string };
+  body: alunoInput;
+}
