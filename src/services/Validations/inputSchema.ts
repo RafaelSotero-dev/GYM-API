@@ -46,13 +46,41 @@ export const alunoSchemaInput = z.object({
   ),
 });
 
-export const updateInputSchema = z
-  .object({
-    nome: z
-      .string({ error: 'NOME INVALIDO!' })
-      .nonempty({ error: 'NOME INVALIDO!' }),
-  })
-  .or(
+export const updateInputSchema = z.object({
+  nome: z
+    .string({ error: 'NOME INVALIDO!' })
+    .nonempty({ error: 'NOME INVALIDO!' })
+    .optional(),
+  idade: z
+    .number({ error: 'IDADE INVALIDA!' })
+    .min(10, { error: 'IDADE MÍNIMA NÃO ATINGIDA' })
+    .nonnegative({ error: 'IDADE NÃO PODE SER NEGATIVA!' })
+    .optional(),
+  email: z.email({ error: 'EMAIL INVALIDO!' }).nonempty().optional(),
+  foto: z.string({ error: 'FOTO INVALIDA!' }).nonempty().optional(),
+  CPF: z
+    .string({ error: 'CPF INVALIDO!' })
+    // eslint-disable-next-line no-useless-escape
+    .regex(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, {
+      error: 'CPF INVALIDO!',
+    })
+    .optional(),
+  modalidade: z
+    .literal([1, 2, 3], {
+      error: 'MODALIDADE INVALIDA!',
+    })
+    .optional(),
+  status: z
+    .literal([0, 1], {
+      error: 'STATUS INVALIDO!',
+    })
+    .optional(),
+});
+
+export type alunoInput = z.infer<typeof alunoSchemaInput>;
+export type updateInput = z.infer<typeof updateInputSchema>;
+
+/* .or(
     z
       .object({
         idade: z
@@ -98,6 +126,4 @@ export const updateInputSchema = z
               ),
           ),
       ),
-  );
-
-export type alunoInput = z.infer<typeof alunoSchemaInput>;
+  ); */

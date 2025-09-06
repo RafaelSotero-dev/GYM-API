@@ -9,7 +9,6 @@ const queryString = (column: string) => {
     UPDATE alunos SET ${column} = $1 WHERE cpf = $2;
 `;
 };
-
 export class UpdateGymMember implements IQuery {
   constructor(private database: IDatabaseConnect) {}
   async query(queryParams: IRequest) {
@@ -35,6 +34,21 @@ export class UpdateGymMember implements IQuery {
         if (result.rows[0]) {
           throw new ErrorHandler('CPF JÁ CADASTRADO', 409);
         }
+      }
+      if (Object.keys(body).length > 1) {
+        let str = 'UPDATE alunos SET && WHERE cpf = $1';
+        Object.keys(body).forEach((key, i) => {
+          let valueInput = Object.values(body)[i];
+          if (typeof valueInput === 'string') {
+            valueInput = `'${valueInput}'`;
+          }
+          if (i + 1 === Object.keys(body).length) {
+            str = str.replace('&&', `${key} = ${valueInput}`);
+            return;
+          }
+          str = str.replace('&&', `${key} = ${valueInput}, &&`);
+        });
+        await this.database.connect(str, [cpf]);
       }
 
       await this.database.connect(queryString(Object.keys(body)[0]), [
